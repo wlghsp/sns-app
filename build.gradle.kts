@@ -11,8 +11,14 @@ jib {
     from {
         image = "eclipse-temurin:25-jre-alpine"
         platforms {
-            platform { architecture = "amd64"; os = "linux" }
-            platform { architecture = "arm64"; os = "linux" }
+            platform {
+                architecture = "amd64"
+                os = "linux"
+            }
+            platform {
+                architecture = "arm64"
+                os = "linux"
+            }
         }
     }
     to {
@@ -24,7 +30,6 @@ jib {
         user = "1000:1000"
     }
 }
-
 
 group = "com.apiece"
 version = "0.0.1-SNAPSHOT"
