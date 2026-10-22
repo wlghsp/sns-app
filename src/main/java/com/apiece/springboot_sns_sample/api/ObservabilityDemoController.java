@@ -41,7 +41,7 @@ public class ObservabilityDemoController {
         return ResponseEntity.ok("ok");
     }
 
-    @GetMapping("/ok")
+    @GetMapping("/slow")
     public ResponseEntity<String> slow() throws InterruptedException {
         Thread.sleep(2000);
         return ResponseEntity.ok("slow");
