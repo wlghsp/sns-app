@@ -1,5 +1,6 @@
 package com.apiece.springboot_sns_sample.api;
 
+import com.apiece.springboot_sns_sample.api.demo.ErrorResponse;
 import com.apiece.springboot_sns_sample.api.demo.TraceResponse;
 import com.apiece.springboot_sns_sample.domain.recommend.RecommendService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,30 @@ public class ObservabilityDemoController {
         log.info("[STEP 3] 요청 처리 완료");
 
         return ResponseEntity.ok(new TraceResponse(message, rankedPostIds));
+    }
+
+    @GetMapping("/ok")
+    public ResponseEntity<String> ok() {
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/ok")
+    public ResponseEntity<String> slow() throws InterruptedException {
+        Thread.sleep(2000);
+        return ResponseEntity.ok("slow");
+    }
+
+
+    @GetMapping("/error")
+    public ResponseEntity<ErrorResponse> error() {
+        log.info("[STEP 1] 오류 재현 요청 수신");
+        log.info("[STEP 2] 처리 중 이상 징후 발견");
+
+        try {
+            throw new RuntimeException("Simulated error for observability demo");
+        } catch (RuntimeException e) {
+            log.error("[STEP3] 오류 발생: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError().body(new ErrorResponse("error", e.getMessage()));
+        }
     }
 }
